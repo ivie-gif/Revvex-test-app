@@ -1,25 +1,25 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import AuthLayout from './authLayout'
+import { Box, Divider, Typography } from '@mui/material';
+import Button from './component/Button'
+import Register from './component/Forms/Register';
+import {Route, Routes} from 'react-router-dom'
+import Login from './component/Forms/Login';
+import ConfirmEmail from './component/Forms/ConfirmEmail'
+import EmailVerified from './component/Forms/EmailVerified'
+import VerifyEmailOtp from './component/Forms/VerifyEmailOtp'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+<Routes>
+  <Route path='/register' element={<Register />} />
+  <Route path='/login' element={<Login />} />
+  <Route path='/confirmEmail' element={<ConfirmEmail />} />
+  <Route path='/emailverified' element={<EmailVerified />} />
+  <Route path='/verifyEmail' element={<VerifyEmailOtp />} />
+</Routes>
   );
 }
 
