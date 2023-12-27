@@ -12,18 +12,18 @@ type BtnProp = {
 }
 
 function index({label, handleClick, style, sx, iconSrc, variant, iconPosition}: BtnProp) {
-  const renderIcon = () => <img src={iconSrc} alt="Icon" style={{ marginRight: '8px' }} />;
+  const renderIcon = (iconSrc:any) => <img src={iconSrc} alt="Icon" style={{ marginRight: '8px' }}  />;
 
   return (
-    <Button variant={variant} style={style} sx={sx} onClick={handleClick}  startIcon={iconPosition === 'before' ? renderIcon() : null}
-    endIcon={iconPosition === 'after' ? renderIcon() : null}>
-       {iconSrc && (
+    <Button variant={variant} style={style} sx={sx} onClick={handleClick}  startIcon={iconPosition === 'before' ? renderIcon(iconSrc) : null}
+    endIcon={iconPosition === 'after' ? renderIcon(iconSrc) : null}>
+       {/* {iconSrc && (
         <img
           src={iconSrc}
           alt="Button Icon"
           style={{ marginRight: '8px' }} 
         />
-      )}
+      )} */}
 {label}
     </Button>
   )

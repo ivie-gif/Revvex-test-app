@@ -43,18 +43,19 @@ const palette = {
       primary: '#FFFFFF',
       secondary: '#F8FAFC',
       generalLight: '#FAFAFA',
-      success: '#0A8043',
+      success: '#FFF0E0',
       disabled: '#A7A9BC',
       blueShadeLight: '#F1F2F6',
       lightGreen: '#EDF9F0',
     },
-    // text: {
-    //   black: '#000',
-    //   primary: '#393A4A',
-    //   secondary: '#6B6C7E',
-    //   title: '#272833',
-    //   success: '#15692A',
-    // },
+    text: {
+      black: '#000',
+      primary: '#818187',
+      secondary: '#FF8600',
+      title: '#3B3B45',
+      success: '#959595',
+      subTitle: '#2E2E2E',
+    },
   }
   
   export default palette

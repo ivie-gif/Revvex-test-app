@@ -58,24 +58,6 @@ const Index = ({ children }: { children: React.ReactNode }) => {
         >
           {children}
         </Box>
-        <Button
-          label="Get Help"
-          iconPosition="after"
-          iconSrc={GetHelp}
-          sx={{
-            width: "118.43px",
-            height: "51px",
-            border: "60.71px",
-            padding: '15px',
-            borderRadius: '5px',
-            alignItems: 'right',
-            color: (theme: any) => theme.palette.primary.shade,
-            backgroundColor: (theme: any) => theme.palette.info.main,
-            "&:hover": {
-              backgroundColor: (theme: any) => theme.palette.info.main,
-            },
-          }}
-        />
       </Grid>
     </Grid>
   );
