@@ -2,7 +2,7 @@ import { pxToRem } from '../helpers/formatFont'
 
 const typography = {
   fontFamily:
-  'Mulish, Lexend, sans-serif',
+  'Mulish, Lexend, Inter, sans-serif',
   h2: {
     fontWeight: 700,
     fontStyle: 'normal',
@@ -17,20 +17,20 @@ const typography = {
     lineHeight: '24px',
     letterSpacing: '-1.1%',
   },
-  // h4: {
-  //   fontWeight: 500,
-  //   fontStyle: 'normal',
-  //   fontSize: pxToRem(18),
-  //   lineHeight: '23.94px',
-  //   letterSpacing: '2%',
-  // },
-  // h5: {
-  //   fontWeight: 500,
-  //   fontStyle: 'normal',
-  //   fontSize: pxToRem(16),
-  //   lineHeight: '24px',
-  //   letterSpacing: '2%',
-  // },
+  h4: {
+    fontWeight: 500,
+    fontStyle: 'normal',
+    fontSize: pxToRem(18),
+    lineHeight: '23.94px',
+    letterSpacing: '2%',
+  },
+  h5: {
+    fontWeight: 600,
+    fontStyle: 'normal',
+    fontSize: pxToRem(14),
+    lineHeight: '24px',
+    letterSpacing: '2%',
+  },
   body1: {
     fontWeight: 400,
     fontStyle: 'normal',

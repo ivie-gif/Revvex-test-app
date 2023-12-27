@@ -5,8 +5,36 @@ import Inputs from "../Inputs";
 import Password from "../../assets/Password.svg";
 import GreyEmail from "../../assets/greyEmail.svg";
 import { Link as RouterLink } from "react-router-dom";
+import {useFormik} from 'formik'
+import { useNavigate } from 'react-router-dom';
+import validation from '../../validation/login'
+import { useUpdateUserMutation } from "../../services/loginSlice";
 
 function Login() {
+  const navigate = useNavigate();
+  const [updateUser] = useUpdateUserMutation()
+
+const handleUpdateAccount = async (data: any) => {
+  const payload = {
+    email: data.email,
+    password: data.password,
+  }
+const res = await updateUser(payload).unwrap()
+ // Registration successful, navigate to the login page
+//  navigate('/confirmEmail');
+}
+
+const formik = useFormik({
+  initialValues:{
+    email: '',
+    password: '',
+  },
+  onSubmit: handleUpdateAccount,
+  validationSchema: validation
+})
+
+const {values, handleChange, handleSubmit, errors} = formik
+
   return (
     <AuthLayout>
       <Box
@@ -45,6 +73,9 @@ function Login() {
         <Inputs
           placeholder="Email"
           type={"email"}
+          name= 'email'
+          value={values.email}
+          onChange={handleChange}
           variant={"outlined"}
           iconSrc={GreyEmail}
           sx={{ width: "100%", mb: 2 }}
@@ -53,11 +84,15 @@ function Login() {
         <Inputs
           placeholder="Password"
           type={"password"}
+          name= 'password'
+          value={values.password}
+          onChange={handleChange}
           variant={"outlined"}
           iconSrc={Password}
           sx={{ width: "100%", mb: 2 }}
         />
-        <Button label="Login" variant="outlined" sx={{ mt: 3 }} />
+        <Button label="Login" variant="outlined" 
+        sx={{ mt: 3 }} handleClick={handleSubmit} />
         <Typography
           mt={5}
           sx={{ color: (theme: any) => theme.palette.info.light }}

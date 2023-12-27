@@ -6,17 +6,21 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "../src/theme";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from 'react-redux';
+import store from './store/ApiStore';
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
     <ThemeProvider theme={theme(0)}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </ThemeProvider>
+    </Provider>
   </React.StrictMode>
 );
 
