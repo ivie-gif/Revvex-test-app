@@ -21,6 +21,7 @@ function Register() {
   const navigate = useNavigate();
   const [showFormField, setShowFormField] = useState(false);
   const [createUser] = useCreateUserMutation();
+  const [isButtonDisabled, setButtonDisabled] = useState(true);
 
   const handleCreateAccount = async (data: any) => {
     const payload = {
@@ -32,7 +33,7 @@ function Register() {
 
     const res = await createUser(payload).unwrap();
     if (res) {
-      localStorage.setItem("otp", res.data.opt);
+      localStorage.setItem("token", res.data.token);
       navigate("/confirmEmail");
     }
   };
@@ -50,6 +51,11 @@ function Register() {
 
   const handleRegister = () => {
     setShowFormField(true);
+  };
+
+  const handleInputChange = (e: any) => {
+    formik.handleChange(e);
+    setButtonDisabled(!formik.dirty || !formik.isValid);
   };
 
   const { values, handleChange, handleSubmit, errors, isSubmitting } = formik;
@@ -141,7 +147,7 @@ function Register() {
                 helperText={errors.firstName}
                 name="firstName"
                 value={values.firstName}
-                onChange={handleChange}
+                onChange={handleInputChange}
                 type={"text"}
                 variant={"outlined"}
                 iconSrc={User}
@@ -153,7 +159,7 @@ function Register() {
                 helperText={errors.lastName}
                 name="lastName"
                 value={values.lastName}
-                onChange={handleChange}
+                onChange={handleInputChange}
                 type={"text"}
                 variant={"outlined"}
                 iconSrc={User}
@@ -167,7 +173,7 @@ function Register() {
               helperText={errors.email}
               name="email"
               value={values.email}
-              onChange={handleChange}
+              onChange={handleInputChange}
               type={"email"}
               variant={"outlined"}
               iconSrc={GreyEmail}
@@ -180,7 +186,7 @@ function Register() {
               helperText={errors.password}
               name="password"
               value={values.password}
-              onChange={handleChange}
+              onChange={handleInputChange}
               type={"password"}
               variant={"outlined"}
               iconSrc={Password}
@@ -191,8 +197,9 @@ function Register() {
               <Button
               label={isSubmitting ? "Loading" : "Create Account"}
                 variant="outlined"
-                sx={{ mt: 3 }}
+                disabled={isButtonDisabled}
                 handleClick={handleSubmit}
+                sx={{ mt: 3, backgroundColor: isButtonDisabled ? "#ECEDED" : undefined, }}
               />
             </Box>
             <Typography

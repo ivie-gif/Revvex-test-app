@@ -7,23 +7,34 @@ import { Box, Typography, Link, Grid, Stack } from "@mui/material";
 import AuthLayout from "../../authLayout";
 import Button from "../Button";
 import Inputs from "../Inputs";
-
+import { useVerifyUserMutation } from "../../services/otpSlice";
 
 const VerifyEmailOtp = () => {
-  const otp = localStorage.getItem("otp");
   const navigate = useNavigate();
+  const [verifyUser] = useVerifyUserMutation();
   const [userOtp, setUserOtp] = useState<any>([]);
-  const [errorOtp, setErrorOtp] = useState("");
+  const [errorOtp, setErrorOtp] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: any, name: string) => {
     setUserOtp([...userOtp, e.target.value]);
   };
 
-  const handleOTPVer = () => {
-    if (otp?.toString() === userOtp.join("").toString()) {
-      navigate("/emailverified");
-    } else {
-      setErrorOtp("wrong otp");
+  const handleOTPVer = async () => {
+    setIsSubmitting(true);
+    const payload = {
+      otp: userOtp.join("").toString(),
+    };
+
+    try {
+      const res = await verifyUser(payload).unwrap();
+      if (res) {
+        setIsSubmitting(false);
+        navigate("/emailverified");
+      }
+    } catch (error: any) {
+      setIsSubmitting(false);
+      setErrorOtp(error.data.errors.otp);
     }
   };
 
@@ -36,7 +47,7 @@ const VerifyEmailOtp = () => {
           width: "70%",
           margin: "auto",
           boxShadow: "8px 8px 16px rgba(0, 0, 0, 0.1)",
-          mt: 10,
+          mt: 18,
         }}
       >
         <Typography
@@ -59,9 +70,9 @@ const VerifyEmailOtp = () => {
             mb: 2,
           }}
         >
-          Here's your four digit OTP code
+          A four digit OTP code has been sent to your email
           <Typography color="info.main" ml={1} component="span">
-            {otp}
+            seyi@zojatech.com
           </Typography>
         </Typography>
 
@@ -115,14 +126,16 @@ const VerifyEmailOtp = () => {
         </Grid>
 
         <Box sx={{ mx: 4 }}>
-          <Typography color="error" ml={1} component="span">
-            {errorOtp}
-          </Typography>
+          {errorOtp.map((otpError) => (
+            <Typography color="error" ml={1} component="span">
+              {otpError}
+            </Typography>
+          ))}
         </Box>
 
         <Button
           handleClick={handleOTPVer}
-          label="Confirm code"
+          label={isSubmitting ? "Loading" : "Confirm code"}
           disabled={Number(userOtp.length) < 4}
           sx={{
             width: "160px",

@@ -173,7 +173,7 @@ function Messages() {
               {/* stack for the remaining images and icons nav */}
               <Stack direction="column">
                 {messagesData.map((data) => (
-                  <Box sx={{ py: 1, px: 2 }}>
+                  <Box sx={{ py: 1, }}>
                     <Stack direction="row" gap={1}>
                       <img
                         src={data.icon}
