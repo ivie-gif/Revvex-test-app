@@ -24,7 +24,7 @@ const ConfirmEmail = () => {
           margin: "auto",
           textAlign: "center",
           boxShadow: "8px 8px 16px rgba(0, 0, 0, 0.1)",
-          mt: 10,
+          mt: 18,
         }}
       >
         <img src={SentEmail} alt="email box" style={{ alignItems: "center" }} />
@@ -47,11 +47,7 @@ const ConfirmEmail = () => {
             mb: 2,
           }}
         >
-          No need to Check your mail, we have made it easier, Here's your Otp
-          Code to proceed
-          <Typography color="info.main" ml={1} component="span">
-            {otp}
-          </Typography>
+          We’ve sent an email to seyi@zojatech.com with a an OTP to confirm your account. Check your inbox to  activate your account.
         </Typography>
 
         <Button

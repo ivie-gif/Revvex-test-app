@@ -22,7 +22,7 @@ const EmailVerified = () => {
           width: "55%",
           margin: "auto",
           boxShadow: "8px 8px 16px rgba(0, 0, 0, 0.1)",
-          mt: 10,
+          mt: 18,
           textAlign: "center",
         }}
       >

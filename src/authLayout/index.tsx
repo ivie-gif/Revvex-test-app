@@ -28,23 +28,29 @@ const Index = ({ children }: { children: React.ReactNode }) => {
             Buddy
           </Typography>
         </Stack>
-        <Box p={3} mt={15}>
+        <Box p={3} mt={10}>
           {formContent.map((data: string) => (
             <Stack direction="row" alignItems="center" gap={1} mb={2}>
               <img
                 src={checkImage}
                 alt="logo"
-                style={{ width: "20px", height: "20px" }}
+                style={{ width: "20px", height: "20px", paddingTop: '25px' }}
               />
               <Typography
                 variant="subtitle1"
                 textAlign="left"
+                pt={3}
                 sx={{ color: (theme: any) => theme.palette.info.darkGrey }}
               >
                 {data}
               </Typography>
             </Stack>
           ))}
+        <Box sx={{mt: 18}}>
+          <Typography variant="subtitle2" sx={{fontFamily: 'Mulish', color: (theme: any) => theme.palette.info.light}}>
+          © 2022 Revvex. All rights reserved
+          </Typography>
+        </Box>
         </Box>
       </Grid>
 
