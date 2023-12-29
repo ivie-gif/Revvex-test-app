@@ -1,39 +1,47 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { Link as RouterLink } from "react-router-dom";
+
 import { Box, Typography, Link } from "@mui/material";
+
+import validation from "../../validation/login";
 import AuthLayout from "../../authLayout";
 import Button from "../Button";
 import Inputs from "../Inputs";
 import Password from "../../assets/Password.svg";
 import GreyEmail from "../../assets/greyEmail.svg";
-import { Link as RouterLink } from "react-router-dom";
-import {useFormik} from 'formik'
-import { useNavigate } from 'react-router-dom';
-import validation from '../../validation/login'
 import { useUpdateUserMutation } from "../../services/loginSlice";
 
 function Login() {
+  const [loginError, setLoginError] = useState("");
   const navigate = useNavigate();
-  const [updateUser] = useUpdateUserMutation()
+  const [updateUser] = useUpdateUserMutation();
 
-const handleUpdateAccount = async (data: any) => {
-  const payload = {
-    email: data.email,
-    password: data.password,
-  }
-const res = await updateUser(payload).unwrap()
- // Registration successful, navigate to the login page
-//  navigate('/confirmEmail');
-}
+  const handleUpdateAccount = async (data: any) => {
+    const payload = {
+      email: data.email,
+      password: data.password,
+    };
+    try {
+      const res = await updateUser(payload).unwrap();
+      localStorage.setItem("token", res.data.token);
+      navigate("/portfolio");
+    } catch (error: any) {
+      setLoginError(error.data.message);
+    }
+  };
 
-const formik = useFormik({
-  initialValues:{
-    email: '',
-    password: '',
-  },
-  onSubmit: handleUpdateAccount,
-  validationSchema: validation
-})
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: handleUpdateAccount,
+    validationSchema: validation,
+  });
 
-const {values, handleChange, handleSubmit, errors} = formik
+  const { values, handleChange, handleSubmit, errors, isSubmitting } = formik;
 
   return (
     <AuthLayout>
@@ -70,10 +78,14 @@ const {values, handleChange, handleSubmit, errors} = formik
           Proceed to create account and set up your organization
         </Typography>
 
+        <Box sx={{ mb: 3 }}>
+          <Typography>{loginError}</Typography>
+        </Box>
+
         <Inputs
           placeholder="Email"
           type={"email"}
-          name= 'email'
+          name="email"
           value={values.email}
           onChange={handleChange}
           variant={"outlined"}
@@ -84,15 +96,19 @@ const {values, handleChange, handleSubmit, errors} = formik
         <Inputs
           placeholder="Password"
           type={"password"}
-          name= 'password'
+          name="password"
           value={values.password}
           onChange={handleChange}
           variant={"outlined"}
           iconSrc={Password}
           sx={{ width: "100%", mb: 2 }}
         />
-        <Button label="Login" variant="outlined" 
-        sx={{ mt: 3 }} handleClick={handleSubmit} />
+        <Button
+          label={isSubmitting ? "Loading" : "Login"}
+          variant="outlined"
+          sx={{ mt: 3 }}
+          handleClick={handleSubmit}
+        />
         <Typography
           mt={5}
           sx={{ color: (theme: any) => theme.palette.info.light }}

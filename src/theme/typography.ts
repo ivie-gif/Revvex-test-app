@@ -1,67 +1,66 @@
-import { pxToRem } from '../helpers/formatFont'
+import { pxToRem } from "../helpers/formatFont";
 
 const typography = {
-  fontFamily:
-  'Mulish, Lexend, Inter, sans-serif',
+  fontFamily: "Mulish, Lexend, Inter, sans-serif",
   h2: {
     fontWeight: 700,
-    fontStyle: 'normal',
+    fontStyle: "normal",
     fontSize: pxToRem(24),
-    lineHeight: '24px',
-    letterSpacing: '2%',
+    lineHeight: "24px",
+    letterSpacing: "2%",
   },
   h3: {
     fontWeight: 400,
-    fontStyle: 'normal',
+    fontStyle: "normal",
     fontSize: pxToRem(16),
-    lineHeight: '24px',
-    letterSpacing: '-1.1%',
+    lineHeight: "24px",
+    letterSpacing: "-1.1%",
   },
   h4: {
     fontWeight: 500,
-    fontStyle: 'normal',
+    fontStyle: "normal",
     fontSize: pxToRem(18),
-    lineHeight: '23.94px',
-    letterSpacing: '2%',
+    lineHeight: "23.94px",
+    letterSpacing: "2%",
   },
   h5: {
     fontWeight: 600,
-    fontStyle: 'normal',
+    fontStyle: "normal",
     fontSize: pxToRem(14),
-    lineHeight: '24px',
-    letterSpacing: '2%',
+    lineHeight: "24px",
+    letterSpacing: "2%",
   },
   body1: {
     fontWeight: 400,
-    fontStyle: 'normal',
+    fontStyle: "normal",
     fontSize: pxToRem(14),
-    lineHeight: '24px',
-    letterSpacing: '0.15%',
+    lineHeight: "24px",
+    letterSpacing: "0.15%",
   },
   body2: {
     fontWeight: 500,
-    fontStyle: 'normal',
+    fontStyle: "normal",
     fontSize: pxToRem(13),
-    lineHeight: '19px',
-    letterSpacing: '0.15%',
+    lineHeight: "19px",
+    letterSpacing: "0.15%",
   },
   subtitle1: {
     fontWeight: 400,
-    fontStyle: 'normal',
+    fontStyle: "normal",
     fontSize: pxToRem(18),
-    lineHeight: '24px',
-    letterSpacing: '-1.1%',
+    lineHeight: "24px",
+    letterSpacing: "-1.1%",
   },
   subtitle2: {
     fontWeight: 400,
-    fontStyle: 'normal',
+    fontStyle: "normal",
     fontSize: pxToRem(13),
-    lineHeight: '19px',
-    letterSpacing: '0.15%',
+    lineHeight: "19px",
+    letterSpacing: "0.15%",
   },
   overline: {
     fontWeight: 500,
   },
-}
+};
 
-export default typography
+export default typography;

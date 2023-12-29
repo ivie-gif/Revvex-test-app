@@ -1,5 +1,10 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { Link as RouterLink } from "react-router-dom";
+
 import { Box, Divider, Stack, Typography, Link } from "@mui/material";
-import React, { useState } from "react";
+
 import AuthLayout from "../../authLayout";
 import Button from "../Button";
 import Inputs from "../Inputs";
@@ -9,45 +14,45 @@ import User from "../../assets/user.svg";
 import Password from "../../assets/Password.svg";
 import GreyEmail from "../../assets/greyEmail.svg";
 import GetHelp from "../../assets/getHelp.svg";
-import { Link as RouterLink } from "react-router-dom";
 import { useCreateUserMutation } from "../../services/registrationSlice";
-import {useFormik} from 'formik'
-import { useNavigate } from 'react-router-dom';
-import validation from '../../validation/register'
-
+import validation from "../../validation/register";
 
 function Register() {
   const navigate = useNavigate();
   const [showFormField, setShowFormField] = useState(false);
-const [createUser] = useCreateUserMutation()
+  const [createUser] = useCreateUserMutation();
 
-const handleCreateAccount = async (data: any) => {
-  const payload = {
-    first_name : data.firstName,
-    last_name: data.lastName,
-    email: data.email,
-    password: data.password,
-  }
-const res = await createUser(payload).unwrap()
-navigate('/confirmEmail');
-}
+  const handleCreateAccount = async (data: any) => {
+    const payload = {
+      first_name: data.firstName,
+      last_name: data.lastName,
+      email: data.email,
+      password: data.password,
+    };
 
-const formik = useFormik({
-  initialValues:{
-    firstName : '',
-    lastName: '',
-    email: '',
-    password: '',
-  },
-  onSubmit: handleCreateAccount,
-  validationSchema: validation
-})
+    const res = await createUser(payload).unwrap();
+    if (res) {
+      localStorage.setItem("otp", res.data.opt);
+      navigate("/confirmEmail");
+    }
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    },
+    onSubmit: handleCreateAccount,
+    validationSchema: validation,
+  });
 
   const handleRegister = () => {
     setShowFormField(true);
   };
 
-const {values, handleChange, handleSubmit, errors} = formik
+  const { values, handleChange, handleSubmit, errors, isSubmitting } = formik;
   return (
     <AuthLayout>
       <Box
@@ -83,8 +88,12 @@ const {values, handleChange, handleSubmit, errors} = formik
             <Divider sx={{ my: 2 }}>
               <Typography>or</Typography>
             </Divider>
-            <Button label="Sign up with Google" variant="outlined"  iconPosition="before"
-          iconSrc={Google} />
+            <Button
+              label="Sign up with Google"
+              variant="outlined"
+              iconPosition="before"
+              iconSrc={Google}
+            />
             <Typography
               mt={5}
               sx={{ color: (theme: any) => theme.palette.info.light }}
@@ -105,10 +114,10 @@ const {values, handleChange, handleSubmit, errors} = formik
             >
               Already have an account?{" "}
               <Link component={RouterLink} to="/login" underline="hover">
-            <Typography color="info.main" ml={1} component="span">
-              Login
-            </Typography>
-          </Link>
+                <Typography color="info.main" ml={1} component="span">
+                  Login
+                </Typography>
+              </Link>
             </Typography>
           </>
         ) : (
@@ -130,7 +139,7 @@ const {values, handleChange, handleSubmit, errors} = formik
                 placeholder="First Name"
                 error={errors.firstName}
                 helperText={errors.firstName}
-                name= 'firstName'
+                name="firstName"
                 value={values.firstName}
                 onChange={handleChange}
                 type={"text"}
@@ -142,7 +151,7 @@ const {values, handleChange, handleSubmit, errors} = formik
                 placeholder="Last Name"
                 error={errors.lastName}
                 helperText={errors.lastName}
-                name= 'lastName'
+                name="lastName"
                 value={values.lastName}
                 onChange={handleChange}
                 type={"text"}
@@ -156,7 +165,7 @@ const {values, handleChange, handleSubmit, errors} = formik
               placeholder="Work email"
               error={errors.email}
               helperText={errors.email}
-              name= 'email'
+              name="email"
               value={values.email}
               onChange={handleChange}
               type={"email"}
@@ -169,7 +178,7 @@ const {values, handleChange, handleSubmit, errors} = formik
               placeholder="Password"
               error={errors.password}
               helperText={errors.password}
-              name= 'password'
+              name="password"
               value={values.password}
               onChange={handleChange}
               type={"password"}
@@ -179,7 +188,12 @@ const {values, handleChange, handleSubmit, errors} = formik
             />
 
             <Box>
-              <Button label="Create Account" variant="outlined" sx={{ mt: 3 }} handleClick={handleSubmit} />
+              <Button
+              label={isSubmitting ? "Loading" : "Create Account"}
+                variant="outlined"
+                sx={{ mt: 3 }}
+                handleClick={handleSubmit}
+              />
             </Box>
             <Typography
               mt={5}
@@ -201,16 +215,18 @@ const {values, handleChange, handleSubmit, errors} = formik
             >
               Already have an account?{" "}
               <Link component={RouterLink} to="/login" underline="hover">
-            <Typography color="info.main" ml={1} component="span">
-              Login
-            </Typography>
-          </Link>
+                <Typography color="info.main" ml={1} component="span">
+                  Login
+                </Typography>
+              </Link>
             </Typography>
           </>
         )}
-        
       </Box>
-        <Box mt={5} sx={{display: 'flex', justifyContent: 'flex-end', mr: 9, mb: 8}}>
+      <Box
+        mt={5}
+        sx={{ display: "flex", justifyContent: "flex-end", mr: 9, mb: 8 }}
+      >
         <Button
           label="Get Help"
           iconPosition="after"
@@ -219,9 +235,9 @@ const {values, handleChange, handleSubmit, errors} = formik
             width: "118.43px",
             height: "51px",
             border: "60.71px",
-            padding: '15px',
-            borderRadius: '60.71px',
-            alignItems: 'right',
+            padding: "15px",
+            borderRadius: "60.71px",
+            alignItems: "right",
             color: (theme: any) => theme.palette.primary.shade,
             backgroundColor: (theme: any) => theme.palette.info.main,
             "&:hover": {
@@ -229,7 +245,7 @@ const {values, handleChange, handleSubmit, errors} = formik
             },
           }}
         />
-        </Box>
+      </Box>
     </AuthLayout>
   );
 }

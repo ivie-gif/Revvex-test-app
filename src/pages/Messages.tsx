@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
-import React, { useRef, useState }  from "react";
+
 import Layout from "../layout";
 import SearchIcon from "../assets/searchIcon.svg";
 import CircleFrame from "../assets/circleFrame.svg";
@@ -21,40 +24,44 @@ import { messagesData } from "../constants/MessageData";
 import Button from "../component/Button";
 
 function Messages() {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token]);
+
   const currentTime = new Date();
   const formattedTime = currentTime.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
-const [newChat, setNewChat] = useState("")
-const chatString: any = localStorage.getItem('chat');
-const chat: string[] = chatString ? JSON.parse(chatString) : [];
+  const [newChat, setNewChat] = useState("");
+  const chatString: any = localStorage.getItem("chat");
+  const chat: string[] = chatString ? JSON.parse(chatString) : [];
 
-console.log(chatString, '???????')
+  const handleChat = (e: any) => {
+    setNewChat(e.target.value);
+  };
+  const handleClear = () => {
+    localStorage.removeItem("chat");
+    window.location.reload();
+  };
 
-const handleChat = (e: any) => {
-    setNewChat(e.target.value)
-}
-const handleClear = () => {
-    localStorage.removeItem('chat')
-    window.location.reload()
-}
-
-
-const handleSend = (e: any) => {
+  const handleSend = (e: any) => {
     e.preventDefault();
-    
+
     const updatedChat = [...chat, newChat];
-    
+
     setNewChat("");
     localStorage.setItem("chat", JSON.stringify(updatedChat));
-    
-    console.log(newChat);
   };
 
   return (
     <Layout>
-      <Grid container direction="row" justifyContent="space-between" mb={5} >
+      <Grid container direction="row" justifyContent="space-between" mb={5}>
         <Grid item>
           <Typography
             variant="h2"
@@ -97,10 +104,17 @@ const handleSend = (e: any) => {
       </Grid>
 
       {/* Message Chat */}
-      <Box sx={{ backgroundColor: "#FFFFFF", overflowY: 'scroll', height:'80vh', p: 5 }}>
+      <Box
+        sx={{
+          backgroundColor: "#FFFFFF",
+          overflowY: "scroll",
+          height: "80vh",
+          p: 5,
+        }}
+      >
         <Grid container>
           <Grid item md={3}>
-            <Box sx={{ backgroundColor: "#FAFAFA", }}>
+            <Box sx={{ backgroundColor: "#FAFAFA" }}>
               {/* first image and icons nav */}
               <Box sx={{ py: 3, px: 2 }}>
                 <Stack direction="row" gap={1}>
@@ -226,14 +240,12 @@ const handleSend = (e: any) => {
                 ))}
               </Stack>
             </Box>
-            <Divider
-              sx={{ borderBottom: "1px solid #CDCDCD", mb: 2, mx: 1 }}
-            />
+            <Divider sx={{ borderBottom: "1px solid #CDCDCD", mb: 2, mx: 1 }} />
           </Grid>
 
           {/* core message chat section */}
           <Grid item md={9}>
-            <Box  p={5}>
+            <Box p={5}>
               <Grid
                 container
                 alignItems="center"
@@ -264,196 +276,220 @@ const handleSend = (e: any) => {
                     <img src={Love} alt="person image" />
                     <img src={NotifSearch} alt="person image" />
                     <img src={NotificationBell} alt="person image" />
-                    <Button handleClick={handleClear} label='Clear Local Storage' sx={{backgroundColor:(theme: any) => theme.palette.info.main, color:(theme: any) => theme.palette.primary.shade,
-                    '&:hover' :{
-                        backgroundColor:(theme: any) => theme.palette.info.main
-                    } }} />
+                    <Button
+                      handleClick={handleClear}
+                      label="Clear Local Storage"
+                      sx={{
+                        backgroundColor: (theme: any) =>
+                          theme.palette.info.main,
+                        color: (theme: any) => theme.palette.primary.shade,
+                        "&:hover": {
+                          backgroundColor: (theme: any) =>
+                            theme.palette.info.main,
+                        },
+                      }}
+                    />
                   </Stack>
                 </Grid>
               </Grid>
-              <Divider sx={{ borderBottom: "1px solid #D9D9D9", mt: 2, mb: 4, mx: 1 }}></Divider>
-              
-              {/* between chats */}
-              <Box sx={{ display: 'flex', flexDirection: 'column', height: '65vh'}}>
-                <Box sx={{flex: 1,}}>
-                <Grid container justifyContent="space-between">
-                  <Grid item>
-                    <Stack direction="row" gap={1}>
-                      <img
-                        src={Roy}
-                        alt="icon"
-                        style={{
-                          width: "25px",
-                          height: "25px",
-                          marginTop: "60px",
-                        }}
-                      />
-                      <Box
-                        sx={{
-                          backgroundColor: "#F1F1F1",
-                          borderRadius: "10px, 10px, 10px, 0px",
-                          width: "259px",
-                        }}
-                      >
-                        <Typography
-                          variant="body1"
-                          sx={{
-                            color: (theme: any) => theme.palette.text.subTitle,
-                            p: 1,
-                          }}
-                        >
-                          Hi David, have you got the project report pdf? Plz be
-                          sure to fill the details by today end of the day.
-                        </Typography>
-                      </Box>
-                    </Stack>
-                  </Grid>
-                  <Grid item>
-                    <Stack direction="row" gap={1} > 
-                      <Box
-                        sx={{
-                          backgroundColor: "#F1F1F1",
-                          borderRadius: "10px, 10px, 10px, 0px",
-                          width: "259px",
-                          height: '45px',
-                          mt: 12,
-                        }}
-                      >
-                        <Typography
-                          variant="body1"
-                          sx={{
-                            color: (theme: any) => theme.palette.text.secondary,
-                            p: 1,
-                          }}
-                        >
-                          No, I haven't.
-                        </Typography>
-                      </Box>
-                       <img
-                        src={Lisa}
-                        alt="icon"
-                        style={{
-                          width: "25px",
-                          height: "25px",
-                          marginTop: "118px",
-                        }}
-                      />
-                    </Stack>
-                  </Grid>
-                </Grid>
-              </Box>
-              <Divider sx={{mt: -35}}>
-              <Typography>Today</Typography>
-            </Divider>
+              <Divider
+                sx={{ borderBottom: "1px solid #D9D9D9", mt: 2, mb: 4, mx: 1 }}
+              ></Divider>
 
-            <Box>
-      {chat.map((message: string, index: number) => (
-        <Box sx={{ mb: -3, display: 'flex', justifyContent: 'flex-end'}}>
-         <Stack direction="row" gap={1} > 
-                      <Box
-                        sx={{
-                          backgroundColor: "#F1F1F1",
-                          borderRadius: "10px, 10px, 10px, 0px",
-                          width: "259px",
-                          height: 'auto',
-                          mt: 6,
-                        }}
-                      >
-                        <Typography
-                          variant="body1"
-                          sx={{
-                            color: (theme: any) => theme.palette.text.secondary,
-                            p: 1,
-                          }}
-                        >
-                          {message}
-                        </Typography>
-                      </Box>
-                       <img
-                        src={Lisa}
-                        alt="icon"
-                        style={{
-                          width: "25px",
-                          height: "25px",
-                          marginTop: "70px",
-                        }}
-                      />
-                    </Stack>
-            </Box>
-      ))}
-    </Box>
-              {/* Chat box */}
+              {/* between chats */}
               <Box
                 sx={{
-                  backgroundColor: "#D9D9D9",
-                  height: "96px",
-                  borderRadius: "12px",
-                  width: "716px",
-                  mt: 8
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "65vh",
                 }}
               >
-                <Grid container alignItems="center">
-                  <Grid item sx={{ position: "relative" }}>
-                    <Inputs
-                      placeholder="Write Something...."
-                      type="text"
-                      variant="outlined"
-                      iconSrc={Mic}
-                      sx={{
-                        width: "500px",
-                        // borderRadius: "15px",
-                        my: 3,
-                        mx: 3,
-                        border: '1px solid #FFFFFF !important',
-                        borderColor: '#FFFFFF !important',
-                        outline: 'none',
-                        height: "48px",
-                        paddingRight: "100px",
-          overflowWrap: 'break-word',  
-                        backgroundColor: (theme: any) =>
-                          theme.palette.background.primary,
-                      }}
-                      onChange={handleChat}
-                      value={newChat}
-                    />
-                    <img
-                      src={Emoji}
-                      alt="icons"
-                      style={{
-                        position: "absolute",
-                        right: "40px",
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                      }}
-                    />
-                    <img
-                      src={Camera}
-                      alt="icons"
-                      style={{
-                        position: "absolute",
-                        right: "70px",
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                      }}
-                    />
-                    <img
-                      src={PaperClip}
-                      alt="icons"
-                      style={{
-                        position: "absolute",
-                        right: "100px",
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                      }}
-                    />
+                <Box sx={{ flex: 1 }}>
+                  <Grid container justifyContent="space-between">
+                    <Grid item>
+                      <Stack direction="row" gap={1}>
+                        <img
+                          src={Roy}
+                          alt="icon"
+                          style={{
+                            width: "25px",
+                            height: "25px",
+                            marginTop: "60px",
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            backgroundColor: "#F1F1F1",
+                            borderRadius: "10px, 10px, 10px, 0px",
+                            width: "259px",
+                          }}
+                        >
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              color: (theme: any) =>
+                                theme.palette.text.subTitle,
+                              p: 1,
+                            }}
+                          >
+                            Hi David, have you got the project report pdf? Plz
+                            be sure to fill the details by today end of the day.
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    </Grid>
+                    <Grid item>
+                      <Stack direction="row" gap={1}>
+                        <Box
+                          sx={{
+                            backgroundColor: "#F1F1F1",
+                            borderRadius: "10px, 10px, 10px, 0px",
+                            width: "259px",
+                            height: "45px",
+                            mt: 12,
+                          }}
+                        >
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              color: (theme: any) =>
+                                theme.palette.text.secondary,
+                              p: 1,
+                            }}
+                          >
+                            No, I haven't.
+                          </Typography>
+                        </Box>
+                        <img
+                          src={Lisa}
+                          alt="icon"
+                          style={{
+                            width: "25px",
+                            height: "25px",
+                            marginTop: "118px",
+                          }}
+                        />
+                      </Stack>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <img src={Send} alt="send icon" onClick={handleSend}  />
-                  </Grid>
-                </Grid>
-              </Box>
                 </Box>
+                <Divider>
+                  <Typography>Today</Typography>
+                </Divider>
 
+                <Box>
+                  {chat.map((message: string, index: number) => (
+                    <Box
+                      sx={{
+                        mb: -3,
+                        display: "flex",
+                        justifyContent: "flex-end",
+                      }}
+                    >
+                      <Stack direction="row" gap={1}>
+                        <Box
+                          sx={{
+                            backgroundColor: "#F1F1F1",
+                            borderRadius: "10px, 10px, 10px, 0px",
+                            width: "259px",
+                            height: "auto",
+                            mt: 6,
+                          }}
+                        >
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              color: (theme: any) =>
+                                theme.palette.text.secondary,
+                              p: 1,
+                            }}
+                          >
+                            {message}
+                          </Typography>
+                        </Box>
+                        <img
+                          src={Lisa}
+                          alt="icon"
+                          style={{
+                            width: "25px",
+                            height: "25px",
+                            marginTop: "70px",
+                          }}
+                        />
+                      </Stack>
+                    </Box>
+                  ))}
+                </Box>
+                {/* Chat box */}
+                <Box
+                  sx={{
+                    backgroundColor: "#D9D9D9",
+                    height: "96px",
+                    borderRadius: "12px",
+                    width: "716px",
+                    mt: 8,
+                  }}
+                >
+                  <Grid container alignItems="center">
+                    <Grid item sx={{ position: "relative" }}>
+                      <Inputs
+                        placeholder="Write Something...."
+                        type="text"
+                        variant="outlined"
+                        iconSrc={Mic}
+                        sx={{
+                          width: "500px",
+                          my: 3,
+                          mx: 3,
+                          border: "1px solid #FFFFFF !important",
+                          borderColor: "#FFFFFF !important",
+                          outline: "none",
+                          height: "48px",
+                          paddingRight: "100px",
+                          overflowWrap: "break-word",
+                          backgroundColor: (theme: any) =>
+                            theme.palette.background.primary,
+                        }}
+                        onChange={handleChat}
+                        value={newChat}
+                      />
+                      <img
+                        src={Emoji}
+                        alt="icons"
+                        style={{
+                          position: "absolute",
+                          right: "40px",
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                        }}
+                      />
+                      <img
+                        src={Camera}
+                        alt="icons"
+                        style={{
+                          position: "absolute",
+                          right: "70px",
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                        }}
+                      />
+                      <img
+                        src={PaperClip}
+                        alt="icons"
+                        style={{
+                          position: "absolute",
+                          right: "100px",
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                        }}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <img src={Send} alt="send icon" onClick={handleSend} />
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Box>
             </Box>
           </Grid>
         </Grid>
