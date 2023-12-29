@@ -125,7 +125,7 @@ function Index({ children }: { children: React.ReactNode }) {
       </Grid>
 
       <Grid item md={10}>
-        <Box sx={{ backgroundColor: "#F6F6F6", height: "100vh", p: 5 }}>
+        <Box sx={{ backgroundColor: "#F6F6F6", height: "auto", p: 5 }}>
           {children}
         </Box>
       </Grid>

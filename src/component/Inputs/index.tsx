@@ -1,4 +1,4 @@
-import React, { ChangeEvent, CSSProperties } from "react";
+import { ChangeEvent, CSSProperties, RefObject } from "react";
 import { Avatar, InputAdornment, TextField } from "@mui/material";
 
 type InputProps = {
@@ -10,15 +10,26 @@ type InputProps = {
   iconSrc?: string;
   name?: string;
   value?: string;
-  onChange?: (e:ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   error?: any;
   helperText?: string;
-  multiline?: boolean
-  ref?: any
-  
+  multiline?: boolean;
 };
 
-function index({ placeholder, type, variant, style, sx, iconSrc, name, value, onChange, helperText, error, multiline, ref }: InputProps) {
+function index({
+  placeholder,
+  type,
+  variant,
+  style,
+  sx,
+  iconSrc,
+  name,
+  value,
+  onChange,
+  helperText,
+  error,
+  multiline,
+}: InputProps) {
   return (
     <TextField
       placeholder={placeholder}
@@ -27,7 +38,6 @@ function index({ placeholder, type, variant, style, sx, iconSrc, name, value, on
       error={error}
       onChange={onChange}
       type={type}
-      ref={ref}
       multiline={multiline || false}
       name={name}
       variant={variant}
@@ -43,7 +53,7 @@ function index({ placeholder, type, variant, style, sx, iconSrc, name, value, on
             />
           </InputAdornment>
         ) : undefined,
-        disableUnderline: true
+        disableUnderline: true,
       }}
     />
   );

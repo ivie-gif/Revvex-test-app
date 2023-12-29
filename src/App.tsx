@@ -5,7 +5,7 @@ import AuthLayout from './authLayout'
 import { Box, Divider, Typography } from '@mui/material';
 import Button from './component/Button'
 import Register from './component/Forms/Register';
-import {Route, Routes} from 'react-router-dom'
+import {Route, Routes, Navigate} from 'react-router-dom'
 import Login from './component/Forms/Login';
 import ConfirmEmail from './component/Forms/ConfirmEmail'
 import EmailVerified from './component/Forms/EmailVerified'
@@ -16,6 +16,7 @@ import Messages from './pages/Messages'
 function App() {
   return (
 <Routes>
+  <Route path='/' element={<Navigate to='/login' replace />} />
   <Route path='/register' element={<Register />} />
   <Route path='/login' element={<Login />} />
   <Route path='/confirmEmail' element={<ConfirmEmail />} />
